@@ -16,39 +16,14 @@ class GameTest extends \PHPUnit_Framework_TestCase
         self::assertTrue(Checker::check(new Coordinate(0, 0), self::generateMediumGrid(), 1));
     }
 
+    public function testAValueIsNotValidInValidGrid()
+    {
+        self::assertFalse(Checker::check(new Coordinate(0, 0), self::generateMediumGrid(), 2));
+    }
+
     public function testAValueIsNotValidInGrid()
     {
         self::assertFalse(Checker::check(new Coordinate(1, 1), self::generateBadGrid(), 1));
-    }
-
-    public function testARowIsValid()
-    {
-        self::assertTrue(Checker::isRowValid(new Coordinate(0, 0), self::generateMediumGrid(), 2));
-    }
-
-    public function testARowIsNotValid()
-    {
-        self::assertFalse(Checker::isRowValid(new Coordinate(1, 1), self::generateBadGrid(), 1));
-    }
-
-    public function testAColumnIsValid()
-    {
-        self::assertTrue(Checker::isColumnValid(new Coordinate(1, 1), self::generateMediumGrid(), 3));
-    }
-
-    public function testAColumnIsNotValid()
-    {
-        self::assertFalse(Checker::isColumnValid(new Coordinate(1, 1), self::generateBadGrid(), 1));
-    }
-
-    public function testAZoneIsValid()
-    {
-        self::assertTrue(Checker::isZoneValid(new Coordinate(0, 0), self::generateMediumGrid(), 5));
-    }
-
-    public function testAZoneIsNotValid()
-    {
-        self::assertFalse(Checker::isZoneValid(new Coordinate(0, 0), self::generateBadGrid(), 1));
     }
 
     public function testResolveEasy()
@@ -89,6 +64,16 @@ class GameTest extends \PHPUnit_Framework_TestCase
         $end = microtime(true);
 
         echo "\nSudoku(Diabolical) solved in : ".(round(($end-$start)*1000, 2))." ms \n";
+    }
+
+    public function testResolveUnresolvable()
+    {
+        $start = microtime(true);
+        $solver = new Solver();
+        self::assertFalse($solver->resolve(self::generateNotResolvableGrid(), false));
+        $end = microtime(true);
+
+        echo "\nSudoku(Not resolvable) not solved in : ".(round(($end-$start)*1000, 2))." ms \n";
     }
 
 }

@@ -8,15 +8,13 @@ use Model\Coordinate;
 
 class Checker
 {
-    const VALID_INDEX = array(0, 1, 2, 3, 4, 5, 6, 7, 8);
-
     /**
-     * @param $rowIndex
+     * @param Coordinate $coordinate
      * @param array $grid
      * @param $value
      * @return bool
      */
-    public static function isRowValid(Coordinate $coordinate, array $grid, $value)
+    private static function isRowValid(Coordinate $coordinate, array $grid, $value)
     {
         $rowIndex = $coordinate->getX();
         for($j = 0 ; $j < 9 ; $j++) {
@@ -29,12 +27,12 @@ class Checker
     }
 
     /**
-     * @param $columnIndex
+     * @param Coordinate $coordinate
      * @param array $grid
      * @param $value
      * @return bool
      */
-    public static function isColumnValid(Coordinate $coordinate, array $grid, $value)
+    private static function isColumnValid(Coordinate $coordinate, array $grid, $value)
     {
         $columnIndex = $coordinate->getY();
         for($i = 0 ; $i < 9 ; $i++) {
@@ -47,18 +45,15 @@ class Checker
     }
 
     /**
-     * @param $rowIndex
-     * @param $colIndex
+     * @param Coordinate $coordinate
      * @param array $grid
      * @param $value
      * @return bool
      */
-    public static function isZoneValid(Coordinate $coordinate, array $grid, $value)
+    private static function isZoneValid(Coordinate $coordinate, array $grid, $value)
     {
-        $rowIndex = $coordinate->getX();
-        $colIndex = $coordinate->getY();
-        $_i = $rowIndex-($rowIndex%3);
-        $_j = $colIndex-($colIndex%3);
+        $_i = $coordinate->getX()-($coordinate->getX()%3);
+        $_j = $coordinate->getY()-($coordinate->getY()%3);
         for($i = $_i ; $i < $_i +3 ; $i++) {
             for ($j = $_j ; $j < $_j+3 ; $j++) {
                 if ($grid[$i][$j] === $value) {
@@ -70,6 +65,12 @@ class Checker
         return true;
     }
 
+    /**
+     * @param Coordinate $coordinate
+     * @param array $grid
+     * @param $value
+     * @return bool
+     */
     public static function check(Coordinate $coordinate, array $grid, $value)
     {
         return self::isRowValid($coordinate, $grid, $value) && self::isColumnValid($coordinate, $grid, $value) && self::isZoneValid($coordinate, $grid, $value);

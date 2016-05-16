@@ -66,6 +66,22 @@ trait Builder
         );
     }
 
+    static function generateNotResolvableGrid()
+    {
+        return array(
+            array(0, 8, 0, 0, 0, 0, 1, 0, 0),
+            array(1, 5, 0, 9, 0, 0, 4, 8, 2),
+            array(0, 0, 2, 4, 0, 0, 6, 9, 0),
+            array(0, 0, 0, 6, 4, 0, 0, 0, 3),
+            array(0, 0, 1, 0, 0, 0, 8, 0, 0),
+            array(3, 0, 0, 0, 9, 5, 0, 0, 0),
+            array(0, 2, 3, 0, 0, 7, 9, 0, 0),
+            array(7, 1, 8, 0, 0, 9, 0, 5, 0),
+            array(0, 0, 0, 0, 0, 0, 0, 2, 0)
+        );
+    }
+
+
 
 
     static function generateBadGrid()
